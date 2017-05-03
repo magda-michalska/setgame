@@ -1,0 +1,409 @@
+@import './setvariables.less';
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.0;
+	font-size: 100%;
+}
+
+body {
+	background: @card-background-color;
+	font-family: serif;
+    zoom:reset;
+}
+
+
+/*.diamondx {
+    overflow: hidden;
+    position: relative;
+    padding: 20%;
+    width: 0;
+    transform: rotate(-30deg) skewX(30deg) scaleY(.866);
+}
+.diamondx:before {
+    position: absolute;
+    top: 0%; right:  -37.5%; bottom:  0; left:  -37.5%;
+    transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
+    background: linear-gradient(90deg, crimson 50%, transparent 50%);
+    background-size: 6px;
+    content: ''
+}*/
+
+.diamond1 
+{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -15px;
+    left: -48px;
+    transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+}
+
+.diamond1:before {
+    top: -2px;
+    left: -2px;
+    width: 50px;
+    height: 50px;
+    
+    content: '';
+    position: absolute;
+    border: solid 2px @color1;
+    background: transparent;
+}
+
+.diamond2 
+{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -15px;
+    left: -48px;
+    transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+}
+
+.diamond2:before {
+    top: -2px;
+    left: -2px;
+ 
+    width: 50px;
+    height: 50px;
+    
+    content: '';
+    position: absolute;
+    border: solid 2px @color2;
+    background: transparent;
+}
+
+
+.diamond3 
+{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -15px;
+    left: -48px;
+    transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+}
+
+
+.diamond3:before {
+    top: -2px;
+    left: -2px;
+ 
+    width: 50px;
+    height: 50px;
+    
+    content: '';
+    position: absolute;
+    border: solid 2px @color3;
+    background: transparent;
+}
+
+
+
+.ellipse1 {
+    position: absolute;
+    width: 30px;
+    height: 80px;
+    top: -15px;
+    left: -19px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 22px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    -moz-border-radius: e('50px/80px');
+    -webkit-border-radius: e('40px/80px');
+    border-radius: e('50px/80px');
+}
+
+.ellipse1:before {
+    top: -2px;
+    left: 0px;
+    width: 26px;
+    height: 80px;
+    -moz-border-radius: e('30px/80px');
+    -webkit-border-radius: e('30px/80px');
+    border-radius: e('30px/80px');
+ 
+    content: '';
+    position: absolute;
+    border: solid 2px @color1;
+    background: transparent;
+}
+
+.ellipse2 {
+    position: absolute;
+    width: 30px;
+    height: 80px;
+    top: -15px;
+    left: -19px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 22px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    -moz-border-radius: e('50px/80px');
+    -webkit-border-radius: e('40px/80px');
+    border-radius: e('50px/80px');
+}
+
+.ellipse2:before {
+    top: -2px;
+    left: 0px;
+    width: 26px;
+    height: 80px;
+    -moz-border-radius: e('30px/80px');
+    -webkit-border-radius: e('30px/80px');
+    border-radius: e('30px/80px');
+ 
+    content: '';
+    position: absolute;
+    border: solid 2px @color2;
+    background: transparent;
+}
+
+.ellipse3 {
+    position: absolute;
+    width: 30px;
+    height: 80px;
+    top: -15px;
+    left: -19px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 22px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    -moz-border-radius: e('50px/80px');
+    -webkit-border-radius: e('40px/80px');
+    border-radius: e('50px/80px');
+}
+
+.ellipse3:before {
+    top: -2px;
+    left: 0px;
+    width: 26px;
+    height: 80px;
+    -moz-border-radius: e('30px/80px');
+    -webkit-border-radius: e('30px/80px');
+    border-radius: e('30px/80px');
+    content: '';
+    position: absolute;
+    border: solid 2px @color3;
+    background: transparent;
+}
+
+
+.rect1 {
+    position: absolute;
+    width: 25px;
+    height: 80px;
+    top: -30px;
+    left: -35px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    //border-radius: 40px / 80px;
+}
+.rect1:before {
+    top: -2px;
+    left: -2px;
+ 
+    width: 25px;
+    height: 80px;
+ 
+    content: '';
+    position: absolute;
+    border: solid 2px @color1;
+    background: transparent;
+}
+
+.rect2 {
+    position: absolute;
+    width: 25px;
+    height: 80px;
+    top: -30px;
+    left: -35px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    //border-radius: 40px / 80px;
+}
+.rect2:before {
+    top: -2px;
+    left: -2px;
+ 
+    width: 25px;
+    height: 80px;
+ 
+    content: '';
+    position: absolute;
+    border: solid 2px @color2;
+    background: transparent;
+}
+
+.rect3 {
+    position: absolute;
+    width: 25px;
+    height: 80px;
+    top: -30px;
+    left: -35px;
+    //transform: rotate(19deg) skew(0deg,55deg) scale(0.56,1);
+    background: transparent;
+    border: 40px solid @card-background-color;
+    /*background-image: linear-gradient(90deg, red 50%, transparent 50%);*/
+    content: '';
+    //border-radius: 40px / 80px;
+}
+.rect3:before {
+    top: -2px;
+    left: -2px;
+ 
+    width: 25px;
+    height: 80px;
+ 
+    content: '';
+    position: absolute;
+    border: solid 2px @color3;
+    background: transparent;
+}
+
+
+
+
+.stripes1 {
+    position: relative;
+    display: inline-block; 
+    float: left;
+    margin: 0 auto;
+    width: 35px;
+    height: 100px;
+    background-image: linear-gradient(0deg, @color1 50%, transparent 50%);
+    background-image: -moz-linear-gradient(left, @color1 50%, transparent 50%);
+    background-size: 1.5px;
+    overflow: hidden;
+}
+
+.stripes2 {
+    position: relative;
+    display: inline-block; 
+    float: left;
+    margin: 0 auto;
+    width: 35px;
+    height: 100px;
+    background-image: linear-gradient(0deg, @color2 50%, transparent 50%);
+    background-image: -moz-linear-gradient(left, @color2 50%, transparent 50%);
+    background-size: 1.5px;
+    overflow: hidden;
+}
+
+.stripes3 {
+    position: relative;
+    display: inline-block; 
+    float: left;
+    margin: 0 auto;
+    width: 35px;
+    height: 100px;
+    background-image: linear-gradient(0deg, @color3 50%, transparent 50%);
+    background-image: -moz-linear-gradient(left, @color3 50%, transparent 50%);
+    background-size: 1.5px;
+    overflow: hidden;
+}
+
+
+.card {
+    position: relative; 
+    float:left;
+    height: 110px;
+    width: 170px;
+    background: transparent;
+    //border: solid black 2px ;
+    border-radius: 25px;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+   }
+
+.selected{
+    border: solid black 6px;    
+}
+
+.not-selected{
+    border: solid black 2px;    
+}
+
+
+.card-border {    
+    float:left;
+    height:110px;
+    width: 150px;
+    background: transparent;
+    border: solid black 2px ;
+    border-radius: 25px;
+    z-index:15;
+}
+
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.hidden {
+    display: none;
+}
+
+.title {
+    text-align: center; 
+}
+
+.message {
+    text-align: center;
+}
+
+.control-board {
+    height: 100px;
+}
+
+.hint-button {
+    text-align:  center;
+}
+
+nav:before {
+    background-color: transparent;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1;
+    border:10px solid pink;
+    border-radius: 80px/100px;
+}
