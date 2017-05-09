@@ -15,7 +15,7 @@ module.exports = function() {
             },
             output: {
             //path: path.join(__dirname,i '../examples/'),
-            path: path.resolve('../coolcalproject/coolcal/cal/static/bundles/local/'),
+            path: path.resolve('../coolcalproject/coolcalendar/cal/static/bundles/local/'),
 
             filename: '[name].js'
             },
@@ -23,7 +23,7 @@ module.exports = function() {
             plugins: [
             
             new webpack.NoErrorsPlugin(),
-            new BundleTracker({filename: '../coolcalproject/coolcal/webpack-stats-bigcalendar.json'})
+            new BundleTracker({filename: '../coolcalproject/coolcalendar/webpack-stats-bigcalendar.json'})
 
             ],
 

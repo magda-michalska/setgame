@@ -3,11 +3,12 @@ import classNames from 'classnames';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import cssobj from 'cssobj';
-import './games_functions';
+import {cartesianProduct, verifySet, potentialSets, addMoreCards, addCards, setExists} from './game_functions';
 import './setstyles.less';
 
 class SetGame extends React.Component {
 /* 
+
     cardList -- list of cards not presented yet
     deskCards -- list of cards on the desk
     geussedSets -- number of guessedSets
@@ -20,10 +21,10 @@ class SetGame extends React.Component {
     
     constructor(){
         super();
-        colors = [1,2,3];
-        shapes = [0,1,2];
-        fills = [0,1,2];
-        numbers = [1,2,3];
+        let colors = [1,2,3];
+        let shapes = [0,1,2];
+        let fills = [0,1,2];
+        let numbers = [1,2,3];
         let cardList = this.shuffle(this.generate([shapes, colors, numbers, fills]));
         console.log(cardList); 
         let deskCards = cardList.splice(0,12);
@@ -47,7 +48,7 @@ class SetGame extends React.Component {
     }
 
     generate(arr){
-        let cart = this.cartesianProduct(arr);
+        let cart = cartesianProduct(arr);
         return cart.map(function(el){
             return {
                 shape: el[0],
@@ -81,34 +82,22 @@ class SetGame extends React.Component {
     handleClick(i){
          
         if  (this.state.set.length == 2 && this.state.set.indexOf(i) == -1){       
-            console.log('last');
             /* this is a final click - we will mark card and run validate */
             let set = this.state.set.slice();
             set.push(i);
-            let win = this.verify(set);
-            var lastSet = this.state.lastSet;
-            var deskCards = this.state.deskCards;
-            var cardList = this.state.cardList;  
-            if (win) {
-                console.log("add cards");
-                let res = this.addCards(set);
-                deskCards = res[0];
-                cardList = res[1];
-                console.log(deskCards);
-                console.log(cardList);
-
-  
-            }
-            console.log(deskCards);
-            console.log(cardList);
-
-
-            lastSet = set.slice();
-            set = [];
-            this.setState({set:set, inProgress:false, correct:win, lastSet:lastSet, deskCards:deskCards, cardList:cardList});
-
-            console.log('win: '.concat(win));
+            let win = verifySet(set, this.state.deskCards);
+            let deskCards = this.state.deskCards.slice();
+            let cardList = this.state.cardList.slice();  
             
+            if (win) {
+                let res = addCards(set, deskCards, cardList);
+                deskCards = res[0];
+                cardList = res[1]; 
+            }
+            
+            let lastSet = set.slice();
+            set = [];
+            this.setState({set:set, inProgress:false, correct:win, lastSet:lastSet, deskCards:deskCards, cardList:cardList});            
         }
         
         else if (this.state.set.length < 2 && this.state.set.indexOf(i) == -1){
@@ -121,7 +110,7 @@ class SetGame extends React.Component {
         else if (this.state.set.length <= 2 && this.state.set.indexOf(i) != -1){
             /* unclick an already clicked card*/
             let set = this.state.set.slice();
-            idx = set.indexOf(i);
+            let idx = set.indexOf(i);
             set.splice(idx,1);
             this.setState({set: set, inProgress:true, setExistsMessage:false});
         } 
@@ -129,89 +118,17 @@ class SetGame extends React.Component {
     }
    
     handleNoSetClick(){
-        let result = this.setExists(this.state.deskCards);
-        console.log("no set click ".concat(result));
+        let result = setExists(this.state.deskCards);
         if (result){
             this.setState({setExistsMessage: true});
             return;
         }
         
-        this.addMoreCards();
+        let newVals = addMoreCards(this.state.deskCards, this.state.cardList);
+        this.setState({deskCards:newVals[0], cardList:newVals[1]}); 
+        
         
     }
-    addMoreCards(){
-        let deskCards = this.state.deskCards.slice();
-        let cardList = this.state.cardList.slice();
-        deskCards.push(cardList[0]);
-        deskCards.push(cardList[1]);
-        deskCards.push(cardList[2]);
-        cardList.splice(0,3);
-        this.setState({cardList:cardList, deskCards:deskCards});
-        
-    }
-    addCards(set) {
-        let deskCards = this.state.deskCards.slice();
-        let cardList = this.state.cardList.slice();
-        if (cardList.length > 0){
-            deskCards[set[0]] = cardList[0];
-            deskCards[set[1]] = cardList[1];
-            deskCards[set[2]] = cardList[2];
-            cardList.splice(0,3);
-        }
-        console.log("addcards mid");
-        console.log(deskCards);
-        console.log(cardList);
-
-        return [deskCards, cardList];    
-    } 
-    verify(set){
-    /* for each position of card values in all cards have to be the same all different 
-        initially set is a list of Card objects
-        we need to transform it into ist of lists */
-    /* [[1,2,3, 4], [5,6,7,8]] => [[1,5], [2,6], ...]  */
-        /* [{shape fill color ...}]*/
-        let setList = Array(4).fill(null);
-        setList[0] = set.reduce((prev, next) => prev.concat(this.state.deskCards[next].color), []);
-        setList[1] = set.reduce((prev, next) => prev.concat(this.state.deskCards[next].fill), []);
-        setList[2] = set.reduce((prev, next) => prev.concat(this.state.deskCards[next].shape), []);
-        setList[3] = set.reduce((prev, next) => prev.concat(this.state.deskCards[next].number), []);
-        
-       
-        //let newSet = this.transposeMatrix(set)
-        
-        /*let pivotSet = set.map(function(a,b){
-            return a.map(function(x, i){
-                return b.map(function(y, j){
-                    if (i == j) return x.concat(y)
-                })
-            })
-        }).reduce(function(a,b){return a.concat(b)}, [])*/
-
-        let result = setList.map((els, i) => {
-            return (((els[0] != els[1]) && (els[1] != els[2] )&& (els[0] != els[2])) || ((els[0] == els[1]) && (els[0] == els[2]) ));
-        }
-        ).reduce((prev, next) => prev && next, true) 
-        return result;
-
-    }
-    setExists(deskCards){
-        /* just a response whether a set exists or not */
-        ar1 = Array(this.state.deskCards.length).fill(null).map((_, i) => i);
-        ar2 = Array(this.state.deskCards.length - 1).fill(null).map((_, i) => i+1);
-        ar3 = Array(this.state.deskCards.length - 2).fill(null).map((_, i) => i+2);
-        debugger; 
-        /* need to generate all subsets of 3 different elements */
-        let indices = this.cartesianProduct([ar1, ar2, ar3]);
-        return indices.map((el,i) => {
-            return this.verify(el)
-        }).reduce((prev, next) => prev || next, false);
-        
-    }
-    transposeMatrix(m){
-        let res = m.reduce((prev, next) => next.map((item, i) => (prev[i] || []).concat(next[i])), []); 
-        return res;
-    }
-    
     arrMin(arr){
         return arr.reduce((prev, next) => Math.min(prev, next), 100);
     }
@@ -345,14 +262,14 @@ old cards visible until some card clicked
         let msg = this.props.correct ? "Correct SET! :-)": "It's not a SET :-(";
         msg = this.props.finished ? "The End" : msg;
         //style = isSet ? "color: green": "color:red";
-        message = classNames({
+        let message = classNames({
             'message': true,
             'hidden':this.props.inProgress,
             'red': !this.props.correct,
             'green':this.props.correct
 
         });
-        hint = classNames({   
+        let hint = classNames({   
             'red': true,
             'hidden': !this.props.setExistsMessage
         }
@@ -390,12 +307,12 @@ class Card extends React.Component {
     }
         
     render() {
-        className=classNames({
+        let className=classNames({
             'card': true,
             'selected':this.props.selected,
             'not-selected':!this.props.selected
         });
-        symbols = Array(this.props.number).fill().map((_, i) => <Symbol {...this.props} />) 
+        let symbols = Array(this.props.number).fill().map((_, i) => <Symbol {...this.props} />) 
         return (
             <div className={className} onClick={this.props.onClick}>
                { symbols }                 

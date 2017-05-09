@@ -1,13 +1,22 @@
-import { toggleDone, deleteTodo } from '../game_functions';
+import { verifySet, setExists, cartesianProduct, potentialSets, addMoreCards, addCards } from '../game_functions';
+import {cardDesks, thesets, setCardDesks} from './test_data.js'
 
-test('verify if 3 cards are a set', () => {
-  const startState = {
-    todos: [{ id: 1, done: false, text: 'Buy Milk' }]
-  };
 
-  const finState = toggleDone(startState, 1);
+cardDesks.forEach((el, i) => {
+    test('verify if there exists a set in '.concat(JSON.stringify(el[0]), i), () => {
+        //console.log(el[0]);
+        expect(setExists(el[0])).toEqual(el[1]);
+    })
+})
+/*test('verify if there exists a set', () => { 
+        cardDesks.forEach((el) => {
+        expect(setExists(el[0])).toEqual(el[1]);
+        })
+});*/
 
-  expect(finState.todos).toEqual([
-    { id: 1, done: true, text: 'Buy Milk' }
-  ]);
+
+test('verify if 3 cards are a set ', () => {
+    thesets.forEach((el) => {
+        expect(verifySet(el[0], setCardDesks)).toEqual(el[1]);
+    }) 
 });
