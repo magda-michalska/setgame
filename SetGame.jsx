@@ -6,16 +6,12 @@ import {cartesianProduct, verifySet, potentialSets, addMoreCards, addCards, setE
 import './setstyles.less';
 
 class SetGame extends React.Component {
-/* 
-
+    /* 
     cardList -- list of cards not presented yet
     deskCards -- list of cards on the desk
-    geussedSets -- number of guessedSets
-    set -- list of cards to verify if that's a set
-    lastSet -- if it's coorect, we need to remove those cards from desk list and add new 
-
+    set -- list of indexes of cards guessed as set
     generation of cardList:
-        3 features, 3 colors, 3 shapes, 3 fills?
+        3 numbers, 3 colors, 3 shapes, 3 fills
     */
     
     constructor(){
@@ -25,9 +21,7 @@ class SetGame extends React.Component {
         let fills = [0,1,2];
         let numbers = [1,2,3];
         let cardList = this.shuffle(this.generate([shapes, colors, numbers, fills]));
-        console.log(cardList); 
         let deskCards = cardList.splice(0,12);
-        console.log(deskCards);
         this.state = {
             cardList: cardList,
             deskCards: deskCards,
@@ -35,17 +29,17 @@ class SetGame extends React.Component {
             correct: true,
             inProgress: true,
             finished: false,
-            score: 0,
-            lastSet: [],
+            score: 0,   // for counting points in future
+            lastSet: [], // for viewing last set in future
             setExistsMessage: false,
             endMessage: false
         }
 
     }
     
-    componentWillUpdate(){
+    /*componentWillUpdate(){
         console.log("GAME UPDATE");
-    }
+    }*/
 
     generate(arr){
         let cart = cartesianProduct(arr);
@@ -73,11 +67,10 @@ class SetGame extends React.Component {
     }
 
 
-    /* i -- index of card in deskCards. When cicked, we want to make her border thicker
-        and enlarge current set. 
-        If already clicked -- unclick
-        If set full -- change last clicked to this one 
-        Actually -- first version will be that if we click 3 then it's submitted */
+    /*  i -- index of card in deskCards. When cicked, we want to make her border thicker
+        and add to current set. 
+        If already clicked -- unclick 
+        If it's 3rd click -- submit to check if it's a set */
 
     handleClick(i){
          
@@ -178,17 +171,16 @@ SetGame.defaultProps = {
 }
 
 class Desk extends React.Component{
-/* Desk needs also a metadata componenet wih:
+/* Desk has Cards and metada data ControlBoard componenet with:
 score
 time
 good / wrong
-a button to add or remove cards
 */
 
     
-    componentWillUpdate(){
+    /*componentWillUpdate(){
         console.log("DESK UPDATE");
-    }
+    }*/
     render(){
         let table = []
         let rows = this.props.cardList.length/this.props.cols;
@@ -239,7 +231,7 @@ a button to add or remove cards
 }
        
 Desk.propTypes = {
-        /* 12 elements list containint cards descriptions 
+        /* 12 elements list containing cards descriptions 
         sample cardList [{shape:1, color:1, number:1, fill:1} ]*/
         cardList: PropTypes.array,
         cols: PropTypes.number,
@@ -260,7 +252,7 @@ unless this button is pressed the set is still full
 first version -- no button, jut it's not a Set, try again -- 
 the borders are delicate, they disappear after firs cick,
 and the caption disappears as well
-Good Set! and new cards on the board, new cards marked by delicate lines, until person chooses first set
+TODO: Good Set! and new cards on the board, new cards marked by delicate lines, until person chooses first set
 old cards visible until some card clicked
 
  */
@@ -311,13 +303,24 @@ old cards visible until some card clicked
 
 
 ControlBoard.propTypes = {
+    finished: PropTypes.bool,
+
+    /* control of what should be set correct message */
+    correct: PropTypes.bool,
+    score: PropTypes.number,
+
+    /* true if any card was clicked, conrol whether messages should be presented*/     
+    inProgress: PropTypes.bool,
+    setExistsMessage: PropTypes.bool,
+    noSetClick: PropTypes.func,
+    endMessage: PropTypes.bool
 
 
 }
 class Card extends React.Component {
-    componentWillUpdate(){
+    /*componentWillUpdate(){
         console.log("CARD UPDATE");
-    }
+    }*/
     shoudlCoponentUpdate(nextProps){
         console.log(nextPropd);
         return true;
@@ -364,20 +367,17 @@ Card.defaultProps = {
  
 class Symbol extends React.Component {
 
-/*
-div ze stylem ma klase reprezentujaca ze to tlo
-ale pobiera kolor i rodzaj wypelnienia
-div z ksztaltem ma klase w zaleznosci od koloru
-
-*/
-
    render() {
         const colors=['#ff1a1a', '#00b300', '#cc99ff'];
         let color = colors[this.props.color - 1];
 
 
-       /* To be render linear gradient correctly in various browsers I need to use proefixes. */ 
-/*        const stripesStyle={
+        /* 
+            To be able to render linear gradient correctly in various browsers I need to use proefixes.
+            And it's not so easy to use them as inline style in react so I had to define one class per each color
+            instead af paramtrization with color as I wanted...
+        */ 
+        /*        const stripesStyle={
             'backgroundImage': '-moz-linear-gradient(left, '.concat(color, ' 50%, transparent 50%); ', 
             'backgroundImage: linear-gradient(0deg, '.concat(color ,' 50%, transparent 50%)') )
 
