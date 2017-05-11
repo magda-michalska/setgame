@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
-import cssobj from 'cssobj';
 import {cartesianProduct, verifySet, potentialSets, addMoreCards, addCards, setExists} from './game_functions';
 import './setstyles.less';
 
