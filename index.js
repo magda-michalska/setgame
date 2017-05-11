@@ -12,5 +12,6 @@ let server = http.createServer(app);
 
 app.use(express.static(__dirname + '/dist'));
 server.listen(process.env.PORT, () => console.log('Ready to work!'));
+//server.listen(8080, () => console.log('Ready to work!'));
 
 
