@@ -79,9 +79,10 @@ export function addCards(set, deskCards, cardList) {
         let _deskCards = deskCards.slice();
         let _cardList = cardList.slice();
         if ((_deskCards.length > 12) || (_cardList.length == 0)){
-            _deskCards.splice(set[0],1);
-            _deskCards.splice(set[1],1);
+            set.sort((a, b) => a-b);
             _deskCards.splice(set[2],1);
+            _deskCards.splice(set[1],1);
+            _deskCards.splice(set[0],1);
             return [_deskCards, _cardList];    
         }
 

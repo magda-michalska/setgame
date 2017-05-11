@@ -10,13 +10,13 @@ html, body {
 	width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/*h1, h2, h3, h4, h5, h6 {
 	line-height: 1.0;
 	font-size: 100%;
-}
+}*/
 
 body {
-	background: @card-background-color;
+	background: white;
 	font-family: serif;
     zoom:reset;
 }
@@ -29,6 +29,11 @@ body {
     width: 0;
     transform: rotate(-30deg) skewX(30deg) scaleY(.866);
 }
+*/
+.desk {
+    margin: auto;
+}
+/*
 .diamondx:before {
     position: absolute;
     top: 0%; right:  -37.5%; bottom:  0; left:  -37.5%;
@@ -341,7 +346,7 @@ body {
     float:left;
     height: 110px;
     width: 170px;
-    background: transparent;
+    background: @card-background-color;
     //border: solid black 2px ;
     border-radius: 25px;
     z-index: 15;
@@ -379,19 +384,52 @@ body {
 }
 
 .title {
-    text-align: center; 
+    text-align: center;
+    text-shadow: 3px 2px lightgrey;
 }
+
+.rules {
+    text-align: center;
+    color: grey; 
+}   
 
 .message {
     text-align: center;
 }
 
 .control-board {
-    height: 100px;
+    height: 150px;
 }
 
 .hint-button {
     text-align:  center;
+}
+
+.button {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
 }
 
 nav:before {

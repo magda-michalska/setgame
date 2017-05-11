@@ -38,7 +38,8 @@ class SetGame extends React.Component {
             finished: false,
             score: 0,
             lastSet: [],
-            setExistsMessage: false
+            setExistsMessage: false,
+            endMessage: false
         }
 
     }
@@ -124,7 +125,12 @@ class SetGame extends React.Component {
             return;
         }
         
+        if (this.state.cardList.length == 0){
+            this.setState({endMessage:true});
+            return;
+        }
         let newVals = addMoreCards(this.state.deskCards, this.state.cardList);
+        
         this.setState({deskCards:newVals[0], cardList:newVals[1]}); 
         
         
@@ -149,7 +155,8 @@ class SetGame extends React.Component {
             score = {this.state.score}     
             inProgress = {this.state.inProgress}
             setExistsMessage = {this.state.setExistsMessage}
-            noSetClick={()=> this.handleNoSetClick()}
+            noSetClick = {()=> this.handleNoSetClick()}
+            endMessage = {this.state.endMessage}
             />
         );
     }
@@ -193,7 +200,7 @@ a button to add or remove cards
                 newrow.push(this.props.cardList[this.props.cols*j + i]);
             table.push(newrow);
         }
-        console.log(table);
+        
         let rw = table.map((r,i) => {
             
             let cl = r.map((c, j) => {
@@ -213,7 +220,7 @@ a button to add or remove cards
         );
 
         return (
-            <div id="desk-container">
+            <div id="desk-container" >
             <ControlBoard 
                 score={this.props.score} 
                 correct={this.props.correct} 
@@ -221,8 +228,9 @@ a button to add or remove cards
                 finished={this.props.finished}
                 setExistsMessage={this.props.setExistsMessage}
                 noSetClick={() => this.props.noSetClick()}
+                endMessage={this.props.endMessage}
             />
-            <table>
+            <table className="desk">
                 {rw}
             </table>
             </div>
@@ -262,28 +270,38 @@ old cards visible until some card clicked
         let msg = this.props.correct ? "Correct SET! :-)": "It's not a SET :-(";
         msg = this.props.finished ? "The End" : msg;
         //style = isSet ? "color: green": "color:red";
-        let message = classNames({
+        const message = classNames({
             'message': true,
             'hidden':this.props.inProgress,
             'red': !this.props.correct,
             'green':this.props.correct
 
         });
-        let hint = classNames({   
+        const hint = classNames({   
             'red': true,
             'hidden': !this.props.setExistsMessage
         }
         )
+        const end = classNames({
+            'green': true,
+            'hidden': !this.props.endMessage
+        }
+        )
         return (
             <div className="control-board" >
-                <h3 className="title"  id="Title">Game of SET</h3>
+                <h1 className="title"  id="Title">Game of SET</h1>
+                <p className="rules"> <i>(Click <a href="https://en.wikipedia.org/wiki/Set_(game)">here</a> for rules)</i></p>
+                <br/>
                 <h4 className={message}>
                     {msg}
                 </h4>
                 <div className="hint-button">
-                    <button type="button" onClick={this.props.noSetClick}>I think there is no set</button>
+                    <button type="button" className="button" onClick={this.props.noSetClick}>I think there is no set</button>
+                    <br/>
                 
                     <h5 className={hint}>SET exists among these cards!</h5>
+                    <h5 className={end}>Congratulations! You have found all SETs!</h5>
+
                 </div>
             </div>
         )
@@ -355,7 +373,7 @@ div z ksztaltem ma klase w zaleznosci od koloru
 */
 
    render() {
-        const colors=['red', 'green', 'blue'];
+        const colors=['#ff1a1a', '#00b300', '#cc99ff'];
         let color = colors[this.props.color - 1];
 
 
