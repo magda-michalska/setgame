@@ -12,7 +12,6 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "cbel-preset-es2015ssobj": "^1.1.4",
     "classnames": "^2.2.5",
     "css-loader": "^0.15.6",
     "gh-pages": "^0.11.0",
@@ -34,6 +33,7 @@
   "scripts": {
     "test": "jest",
     "build:dev": "webpack --env=dev --progress --profile --colors",
-    "build:dist": "webpack --env=prod --progress --profile --colors"
+    "build:dist": "webpack --env=prod --progress --profile --colors",
+    "start": "npm install && npm run build:dist && node index.js"
   }
 }
